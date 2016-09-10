@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @if (ViewBag.PageTitle != null && !String.IsNullOrWhiteSpace(ViewBag.PageTitle.ToString()))
+    {
+        <title>@ViewBag.PageTitle - @Localizer["SiteName"]</title>
+    }
+    else
+    {
+        <title>@Localizer["SiteName"]</title>
+    }
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/vendor/tether/dist/css/tether.css" />
+        <link rel="stylesheet" href="~/vendor/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/vendor/font-awesome/css/font-awesome.css"  />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment names="Staging,Production">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/css/tether.min.css"
+			  asp-fallback-href="~/vendor/tether/dist/css/tether.css"
+			  asp-fallback-test-class="tether-element" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.4/css/bootstrap.min.css"
+              asp-fallback-href="~/vendor/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"
+              asp-fallback-href="~/vendor/font-awesome/css/font-awesome.css"
+              asp-fallback-test-class="fa-2x" asp-fallback-test-property="font-size" asp-fallback-test-value="2em" />
+        <link rel="stylesheet" href="~/site.min.css" asp-append-version="true" />
+    </environment>
+</head>
+<body>
+    <header id="main-header" class="navbar navbar-fixed-top navbar-dark bg-inverse">
+        <div class="container">
+            <a asp-controller="Pages" asp-action="Index" class="navbar-brand">@Localizer["SiteName"]</a>
+            <ul class="nav navbar-nav">
+            </ul>
+        </div>
+    </header>
+
+    <div id="main" class="container">
+        @RenderBody()
+    </div>
+
+    <footer id="main-footer">
+        <div class="container">
+            <copyright class="text-muted" from-year="2016" holder="@Localizer["SiteName"].Value"></copyright>
+        </div>
+    </footer>
+
+    <environment names="Development">
+        <script src="~/vendor/jquery/dist/jquery.js"></script>
+        <script src="~/vendor/tether/dist/js/tether.js"></script>
+        <script src="~/vendor/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"
+                asp-fallback-src="~/vendor/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.3/js/tether.min.js"
+                asp-fallback-src="~/vendor/tether/dist/js/tether.js"
+                asp-fallback-test="window.Tether">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.4/js/bootstrap.min.js"
+                asp-fallback-src="~/vendor/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
+        </script>
+        <script src="~/site.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
