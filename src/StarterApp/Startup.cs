@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using StarterApp.Infrastructure;
 
 namespace StarterApp
 {
@@ -44,9 +45,22 @@ namespace StarterApp
 				options.FallBackToParentUICultures = true;
 			});
 
-			services.AddMvc()
+			services.AddMvc(mvc => {
+				mvc.Conventions.Add(new FeatureControllerConvention());
+				})
+				.AddRazorOptions(razor =>
+				{
+					razor.ViewLocationFormats.Clear();
+					razor.ViewLocationFormats.Add("/Features/{1}/{0}.cshtml");
+					razor.ViewLocationFormats.Add("/Features/Shared/{0}.cshtml");
+
+					razor.AreaViewLocationFormats.Clear();
+					razor.AreaViewLocationFormats.Add("/Features/{2}/{1}/{0}.cshtml");
+					razor.AreaViewLocationFormats.Add("/Features/{2}/Shared/{0}.cshtml");
+					razor.AreaViewLocationFormats.Add("/Features/Shared/{0}.cshtml");
+				})
 				.AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
-        }
+		}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -69,11 +83,11 @@ namespace StarterApp
 			app.UseRequestLocalization();
 
 			app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Pages}/{action=Index}/{id?}");
-            });
-        }
+			{
+				routes.MapRoute(
+					name: "default",
+					template: "{controller=Pages}/{action=Index}/{id?}");
+			});
+		}
     }
 }

@@ -54,8 +54,7 @@
   "publishOptions": {
     "include": [
       "Public",
-      "Views",
-      "Areas/**/Views",
+      "Features",
       "app-settings.json",
       "web.config"
     ]
